@@ -1,10 +1,7 @@
-# Dmitry Stepanov
-
-Senior SRE. Multi-cloud, Kubernetes-first, opinionated about observability. Currently exploring new roles.
+Multi-cloud SRE. Kubernetes-first, opinionated about observability. Currently exploring new roles.
 
 - Portfolio: [sre.dstepanov.dev](https://sre.dstepanov.dev)
-- Public dashboards: [grafana.sre.dstepanov.dev](https://grafana.sre.dstepanov.dev)
-- Roseville, CA (UTC-8)
+- Public dashboards: [grafana.dstepanov.dev](https://grafana.dstepanov.dev)
 
 ## Recent portfolio work
 
@@ -23,7 +20,3 @@ Raspberry Pi 5 running k3s, self-hosted observability, and various experiments.
 
 - [homelab-observability](https://github.com/bibigon14/homelab-observability) - textfile-collector exporters plus a blameless postmortem on a Pi-hole v5-to-v6 API break
 - [homelab-k3s](https://github.com/bibigon14/homelab-k3s) - docker-compose to k3s migration on a Pi
-
-## Certifications
-
-CKA / CKAD / CKS, AWS Solutions Architect Professional, AWS DevOps Engineer Professional, HashiCorp Terraform Associate. All currently expired.
