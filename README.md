@@ -1,7 +1,7 @@
 Multi-cloud SRE. Kubernetes-first, opinionated about observability. Currently exploring new roles.
 
 - Portfolio: [sre.dstepanov.dev](https://sre.dstepanov.dev)
-- Public dashboards: [grafana.dstepanov.dev](https://grafana.dstepanov.dev/playlists/play/adhxnsb?kiosk)
+- Live dashboards (kiosk rotation): [grafana.dstepanov.dev](https://grafana.dstepanov.dev/playlists/play/adhxnsb?kiosk)
 
 ## Recent portfolio work
 
