@@ -14,9 +14,3 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
 | [terraform-vault-platform](https://github.com/bibigon14/terraform-vault-platform) | AWS, Vault, Raft, KMS | HA Vault cluster on EC2 with KMS auto-unseal and Raft integrated storage |
 | [k8s-blue-green-deploy](https://github.com/bibigon14/k8s-blue-green-deploy) | k3s, Argo Rollouts, Go | Blue-green with prePromotionAnalysis smoke tests on a Raspberry Pi cluster |
 
-## Homelab
-
-Raspberry Pi 5 running k3s, self-hosted observability, and various experiments.
-
-- [homelab-observability](https://github.com/bibigon14/homelab-observability) - textfile-collector exporters plus a blameless postmortem on a Pi-hole v5-to-v6 API break
-- [homelab-k3s](https://github.com/bibigon14/homelab-k3s) - docker-compose to k3s migration on a Pi
