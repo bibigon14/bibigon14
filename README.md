@@ -9,6 +9,7 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
 
 | Project | Stack | Highlights |
 |---------|-------|------------|
+| [ebpf-tcp-observer](https://github.com/bibigon14/ebpf-tcp-observer) | Go, cilium/ebpf, WireGuard, Prometheus | Kernel-level TCP retransmit observer via a kprobe on `tcp_retransmit_skb`, scraped from homelab Prometheus over a reverse-initiated WireGuard tunnel from an Oracle Cloud Ampere A1 edge VM |
 | [chaos-scheduler-operator](https://github.com/bibigon14/chaos-scheduler-operator) | Go, kubebuilder, controller-runtime, Prometheus | K8s operator running scheduled chaos with a Prometheus SLO guardrail that aborts when the error budget is already burning |
 | [terraform-eks-platform](https://github.com/bibigon14/terraform-eks-platform) | AWS, EKS, Terraform, OIDC | EKS bootstrap with GitHub OIDC and a hand-rolled IRSA module |
 | [terraform-gke-platform](https://github.com/bibigon14/terraform-gke-platform) | GCP, GKE, Terraform, WIF | GKE with Workload Identity Federation; real race-condition bug caught by CI |
