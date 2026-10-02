@@ -46,5 +46,10 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
   <td>k3s, Argo Rollouts, Go</td>
   <td>Blue-green with prePromotionAnalysis smoke tests on a Raspberry Pi cluster</td>
 </tr>
+<tr>
+  <td><a href="https://github.com/bibigon14/homelab-k3s">homelab-k3s</a></td>
+  <td>k3s, Traefik, ArgoCD, cert-manager, Blackbox</td>
+  <td>Production homelab on a Raspberry Pi 5: ArgoCD GitOps, Traefik ingress with self-signed wildcard, end-to-end Blackbox probing. Operational artifacts include the <a href="https://github.com/bibigon14/homelab-k3s/blob/main/docs/runbooks/ingress-health-check.md">ingress health check runbook</a></td>
+</tr>
 </tbody>
 </table>
