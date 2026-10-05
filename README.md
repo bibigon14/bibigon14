@@ -37,6 +37,11 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
   <td>GKE with Workload Identity Federation; real race-condition bug caught by CI</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/bibigon14/terraform-aks-platform">terraform-aks-platform</a></td>
+  <td>Azure, AKS, Terraform, Workload Identity</td>
+  <td>AKS with federated Managed Identity and Azure RBAC; five distinct gotchas caught by CI (OIDC subject drift, k8s version deprecation, VM allowlist, kubelogin, RBAC bootstrap)</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/terraform-vault-platform">terraform-vault-platform</a></td>
   <td>AWS, Vault, Raft, KMS</td>
   <td>HA Vault cluster on EC2 with KMS auto-unseal and Raft integrated storage</td>
