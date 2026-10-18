@@ -27,6 +27,11 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
   <td>Kernel-level TCP retransmit observer via a kprobe on <code>tcp_retransmit_skb</code>, scraped from homelab Prometheus over a reverse-initiated WireGuard tunnel from an Oracle Cloud Ampere A1 edge VM</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/bibigon14/cilium-l7-observability">cilium-l7-observability</a></td>
+  <td>OCI Ampere A1, k3s, Cilium 1.17, Hubble</td>
+  <td>Identity-based (not IP-based) L4 <code>CiliumNetworkPolicy</code> with per-flow verdicts in Hubble UI; three Oracle Cloud deployment gotchas documented end-to-end (INPUT reject on pod CIDR, missing SNAT masquerade, Alpine musl DNS flakes against CoreDNS)</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/chaos-scheduler-operator">chaos-scheduler-operator</a></td>
   <td>Go, kubebuilder, controller-runtime, Prometheus</td>
   <td>K8s operator running scheduled chaos with a Prometheus SLO guardrail that aborts when the error budget is already burning</td>
