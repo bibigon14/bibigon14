@@ -17,6 +17,11 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
 </thead>
 <tbody>
 <tr>
+  <td><a href="https://github.com/bibigon14/vm-observability">vm-observability</a></td>
+  <td>OCI Ampere A1, k3s, vmoperator, VMSingle, VMAgent, VMAlert, Grafana</td>
+  <td>Operator-pattern VictoriaMetrics stack running side-by-side with kube-prometheus-stack on the same OCI VM; measured ~28% less RSS for the identical 24-target scrape surface; vmoperator's Prometheus Converter auto-translates existing PodMonitors so no manual VMPodScrape is needed to adopt existing instrumentation</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/kafka-slo-observability">kafka-slo-observability</a></td>
   <td>OCI Ampere A1, k3s, Strimzi 0.47, Kafka 3.9 (KRaft), Prometheus Operator, Grafana</td>
   <td>Three-replica KRaft Kafka with multi-window multi-burn-rate SLO alerts from the Google SRE Workbook; two silent dashboard traps (<code>strimzi_io_name</code> relabel, Kafka 3.9 JVM metric-source overlap) documented end to end</td>
