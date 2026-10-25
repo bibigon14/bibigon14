@@ -17,6 +17,11 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
 </thead>
 <tbody>
 <tr>
+  <td><a href="https://github.com/bibigon14/otel-logs-traces-stack">otel-logs-traces-stack</a></td>
+  <td>OCI Ampere A1, k3s, Grafana Loki 3.3.2, Grafana Tempo 2.6.1, OpenTelemetry Collector 0.113.0</td>
+  <td>Logs + traces half of the observability triad on the same OCI VM as the Prometheus and VictoriaMetrics stacks - one Grafana pane with metrics / logs / traces all pointing at the same pod. OTEL Collector <code>k8sattributes</code> processor enriches every signal with pod/ns/node/deployment labels; Grafana <code>tracesToLogsV2</code> and <code>derivedFields</code> on <code>trace_id</code> make Explore walk the correlation. 532 MiB total RSS on a 12 GiB shared host</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/vm-observability">vm-observability</a></td>
   <td>OCI Ampere A1, k3s, vmoperator, VMSingle, VMAgent, VMAlert, Grafana</td>
   <td>Operator-pattern VictoriaMetrics stack running side-by-side with kube-prometheus-stack on the same OCI VM; measured ~28% less RSS for the identical 24-target scrape surface; vmoperator's Prometheus Converter auto-translates existing PodMonitors so no manual VMPodScrape is needed to adopt existing instrumentation</td>
