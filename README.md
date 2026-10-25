@@ -79,7 +79,7 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
 <tr>
   <td><a href="https://github.com/bibigon14/homelab-k3s">homelab-k3s</a></td>
   <td>k3s, Traefik, ArgoCD, cert-manager, Blackbox</td>
-  <td>Production homelab on a Raspberry Pi 5: ArgoCD GitOps, Traefik ingress with self-signed wildcard, end-to-end Blackbox probing. Operational artifacts include the <a href="https://github.com/bibigon14/homelab-k3s/blob/main/docs/runbooks/ingress-health-check.md">ingress health check runbook</a></td>
+  <td>Production homelab on a Raspberry Pi 5. <strong>ArgoCD v3.4.4 as the sole control plane</strong>: 15 <code>Application</code> manifests under <code>argocd/</code>, every workload Healthy + Synced (<a href="https://github.com/bibigon14/homelab-k3s/blob/main/docs/screenshots/argocd-apps.png">screenshot</a>); <code>syncPolicy.automated: {prune: true, selfHeal: true}</code> on every app; Argo CD Notifications wires sync failures to the same Telegram channel as Alertmanager. Traefik ingress with self-signed wildcard, end-to-end Blackbox probing, Velero daily backups to R2. Operational artifacts include the <a href="https://github.com/bibigon14/homelab-k3s/blob/main/docs/runbooks/ingress-health-check.md">ingress health check runbook</a></td>
 </tr>
 </tbody>
 </table>
