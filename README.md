@@ -17,6 +17,11 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
 </thead>
 <tbody>
 <tr>
+  <td><a href="https://github.com/bibigon14/inference-slo-stack">inference-slo-stack</a></td>
+  <td>OCI Ampere A1, k3s, VictoriaMetrics (VMRule + VMAgent + VMAlert), Grafana, Go vLLM-compatible mock, k6</td>
+  <td>SLO + burn-rate alerting for LLM inference endpoints. Three orthogonal SLIs (availability, p99 TTFT, p99 TPOT) because latency on a chat completion is the sum of prompt-processing and per-token decode - lumping them hides which half of the pipeline is in trouble. Six burn-rate alerts (3 SLOs x 2 severities) using the Google SRE Workbook multi-window multi-burn-rate pattern (1h x 14.4 fast, 6h x 6 slow). Go vLLM-compatible mock emits the exact <code>vllm:*</code> Prometheus metric families real vLLM 0.6.x does, so the rules and dashboards port 1:1 when the mock is swapped for a real GPU-backed runtime. Live run demonstrated TPOT burn at 94.3x against threshold while availability and TTFT stayed quiet - the <em>which SLO is on fire</em> story worked exactly as designed</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/otel-logs-traces-stack">otel-logs-traces-stack</a></td>
   <td>OCI Ampere A1, k3s, Grafana Loki 3.3.2, Grafana Tempo 2.6.1, OpenTelemetry Collector 0.113.0</td>
   <td>Logs + traces half of the observability triad on the same OCI VM as the Prometheus and VictoriaMetrics stacks - one Grafana pane with metrics / logs / traces all pointing at the same pod. OTEL Collector <code>k8sattributes</code> processor enriches every signal with pod/ns/node/deployment labels; Grafana <code>tracesToLogsV2</code> and <code>derivedFields</code> on <code>trace_id</code> make Explore walk the correlation. 532 MiB total RSS on a 12 GiB shared host</td>
