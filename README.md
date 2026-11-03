@@ -17,6 +17,11 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
 </thead>
 <tbody>
 <tr>
+  <td><a href="https://github.com/bibigon14/incident-timeline-generator">incident-timeline-generator</a></td>
+  <td>Go CLI, stdlib only, kubectl + Prometheus ALERTS + git log ingesters</td>
+  <td>Built from the lesson writing <a href="https://github.com/bibigon14/inference-slo-stack/tree/main/docs/incidents">two production post-mortems</a> last week - the mechanical timeline assembly step (which pod crashed when, which alert fired, which commit went in just before) was pure typing across three terminals. This CLI runs the three queries over the same time window, merges by timestamp, and renders the standard post-mortem Markdown shape with the Timeline table pre-populated and Root cause / Lessons / Follow-up blank for the human. Three independently-optional ingesters: <code>kubectl get events -o json</code> with window filter, <code>ALERTS{alertstate=&quot;firing&quot;}</code> over <code>/api/v1/query_range</code> with firing-episode detection (gap &gt; 2x step), and <code>git log --since --until --format</code> with custom separator. Pure stdlib, no client-go dependency, runs wherever kubectl/git/curl-reachable Prometheus already do. Unit tests on timeline merge and markdown rendering</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/inference-slo-stack">inference-slo-stack</a></td>
   <td>OCI Ampere A1, k3s, VictoriaMetrics (VMRule + VMAgent + VMAlert), Grafana, Go vLLM-compatible mock, k6</td>
   <td>SLO + burn-rate alerting for LLM inference endpoints. Three orthogonal SLIs (availability, p99 TTFT, p99 TPOT) because latency on a chat completion is the sum of prompt-processing and per-token decode - lumping them hides which half of the pipeline is in trouble. Six burn-rate alerts (3 SLOs x 2 severities) using the Google SRE Workbook multi-window multi-burn-rate pattern (1h x 14.4 fast, 6h x 6 slow). Go vLLM-compatible mock emits the exact <code>vllm:*</code> Prometheus metric families real vLLM 0.6.x does, so the rules and dashboards port 1:1 when the mock is swapped for a real GPU-backed runtime. Live run demonstrated TPOT burn at 94.3x against threshold while availability and TTFT stayed quiet - the <em>which SLO is on fire</em> story worked exactly as designed</td>
