@@ -42,6 +42,11 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
   <td>Three-replica KRaft Kafka with multi-window multi-burn-rate SLO alerts from the Google SRE Workbook; two silent dashboard traps (<code>strimzi_io_name</code> relabel, Kafka 3.9 JVM metric-source overlap) documented end to end</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/bibigon14/gpu-observability-gke">gpu-observability-gke</a></td>
+  <td>GCP, GKE, NVIDIA L4 (Ada Lovelace, 24 GB), DCGM, vLLM, Prometheus</td>
+  <td>GCP mirror of gpu-observability-eks on a newer GPU generation. Two money-shots side by side on a real L4 Spot: idle (vLLM resident in 19.6 GB of framebuffer, <code>GPU_UTIL=0%</code>, 38 W) vs under 20-stream load (same 19.6 GB, <code>GPU_UTIL=87%</code>, 70.5 W near the 72 W TDP, ~1000 generation tok/s). <code>FB_USED</code> does not move between the two states; every real signal does - that gap is what the <code>GPUAllocatedButIdle</code> alert catches, on both clouds. Four GKE-specific quirks documented inline: the <code>dcgm-exporter</code> Helm chart&apos;s hard-coded securityContext conflicts with GKE COS&apos;s CDI runtime (shipped as a raw DaemonSet instead); the auto-applied <code>gke-resource-quotas</code> ResourceQuota blocks <code>system-node-critical</code> PriorityClass outside kube-system; DCGM profiling fields fail on Spot L4 so a custom counters CSV keeps only the NVML fields; and the Cluster Autoscaler marks a GPU node with <code>min=0</code> as DeletionCandidate within ~10 min</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/gpu-observability-eks">gpu-observability-eks</a></td>
   <td>AWS, EKS, NVIDIA T4, DCGM, vLLM, Prometheus</td>
   <td>GPU allocated-but-idle cost signal on EKS: DCGM profiling counters catch a T4 reporting ~85% "utilization" while its tensor cores sit at ~13% (memory-bound, not compute-bound). Standalone device-plugin + dcgm-exporter on the accelerated AMI, with a blameless <a href="https://github.com/bibigon14/gpu-observability-eks/blob/main/docs/postmortem.md">postmortem</a> of the driver/AMI matrix</td>
