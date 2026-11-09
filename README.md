@@ -17,6 +17,16 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
 </thead>
 <tbody>
 <tr>
+  <td><a href="https://github.com/bibigon14/gpu-observability-gke">gpu-observability-gke</a></td>
+  <td>GCP, GKE, NVIDIA L4 (Ada Lovelace, 24 GB), DCGM, vLLM, Prometheus</td>
+  <td>GCP mirror of gpu-observability-eks on a newer GPU generation. Two money-shots side by side on a real L4 Spot: idle (vLLM resident in 19.6 GB of framebuffer, <code>GPU_UTIL=0%</code>, 38 W) vs under 20-stream load (same 19.6 GB, <code>GPU_UTIL=87%</code>, 70.5 W near the 72 W TDP, ~1000 generation tok/s). <code>FB_USED</code> does not move between the two states; every real signal does - that gap is what the <code>GPUAllocatedButIdle</code> alert catches, on both clouds. Four GKE-specific quirks documented inline: the <code>dcgm-exporter</code> Helm chart&apos;s hard-coded securityContext conflicts with GKE COS&apos;s CDI runtime (shipped as a raw DaemonSet instead); the auto-applied <code>gke-resource-quotas</code> ResourceQuota blocks <code>system-node-critical</code> PriorityClass outside kube-system; DCGM profiling fields fail on Spot L4 so a custom counters CSV keeps only the NVML fields; and the Cluster Autoscaler marks a GPU node with <code>min=0</code> as DeletionCandidate within ~10 min</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/bibigon14/chaos-scheduler-operator">chaos-scheduler-operator</a></td>
+  <td>Go, kubebuilder, controller-runtime, Prometheus</td>
+  <td>K8s operator running scheduled chaos with a Prometheus SLO guardrail that aborts when the error budget is already burning</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/incident-timeline-generator">incident-timeline-generator</a></td>
   <td>Go CLI, stdlib only, kubectl + Prometheus ALERTS + git log ingesters</td>
   <td>Built from the lesson writing <a href="https://github.com/bibigon14/inference-slo-stack/tree/main/docs/incidents">two production post-mortems</a> last week - the mechanical timeline assembly step (which pod crashed when, which alert fired, which commit went in just before) was pure typing across three terminals. This CLI runs the three queries over the same time window, merges by timestamp, and renders the standard post-mortem Markdown shape with the Timeline table pre-populated and Root cause / Lessons / Follow-up blank for the human. Three independently-optional ingesters: <code>kubectl get events -o json</code> with window filter, <code>ALERTS{alertstate=&quot;firing&quot;}</code> over <code>/api/v1/query_range</code> with firing-episode detection (gap &gt; 2x step), and <code>git log --since --until --format</code> with custom separator. Pure stdlib, no client-go dependency, runs wherever kubectl/git/curl-reachable Prometheus already do. Unit tests on timeline merge and markdown rendering</td>
@@ -42,9 +52,9 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
   <td>Three-replica KRaft Kafka with multi-window multi-burn-rate SLO alerts from the Google SRE Workbook; two silent dashboard traps (<code>strimzi_io_name</code> relabel, Kafka 3.9 JVM metric-source overlap) documented end to end</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/bibigon14/gpu-observability-gke">gpu-observability-gke</a></td>
-  <td>GCP, GKE, NVIDIA L4 (Ada Lovelace, 24 GB), DCGM, vLLM, Prometheus</td>
-  <td>GCP mirror of gpu-observability-eks on a newer GPU generation. Two money-shots side by side on a real L4 Spot: idle (vLLM resident in 19.6 GB of framebuffer, <code>GPU_UTIL=0%</code>, 38 W) vs under 20-stream load (same 19.6 GB, <code>GPU_UTIL=87%</code>, 70.5 W near the 72 W TDP, ~1000 generation tok/s). <code>FB_USED</code> does not move between the two states; every real signal does - that gap is what the <code>GPUAllocatedButIdle</code> alert catches, on both clouds. Four GKE-specific quirks documented inline: the <code>dcgm-exporter</code> Helm chart&apos;s hard-coded securityContext conflicts with GKE COS&apos;s CDI runtime (shipped as a raw DaemonSet instead); the auto-applied <code>gke-resource-quotas</code> ResourceQuota blocks <code>system-node-critical</code> PriorityClass outside kube-system; DCGM profiling fields fail on Spot L4 so a custom counters CSV keeps only the NVML fields; and the Cluster Autoscaler marks a GPU node with <code>min=0</code> as DeletionCandidate within ~10 min</td>
+  <td><a href="https://github.com/bibigon14/cilium-l7-observability">cilium-l7-observability</a></td>
+  <td>OCI Ampere A1, k3s, Cilium 1.17, Hubble</td>
+  <td>Identity-based (not IP-based) L4 <code>CiliumNetworkPolicy</code> with per-flow verdicts in Hubble UI; three Oracle Cloud deployment gotchas documented end-to-end (INPUT reject on pod CIDR, missing SNAT masquerade, Alpine musl DNS flakes against CoreDNS)</td>
 </tr>
 <tr>
   <td><a href="https://github.com/bibigon14/gpu-observability-eks">gpu-observability-eks</a></td>
@@ -52,24 +62,19 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
   <td>GPU allocated-but-idle cost signal on EKS: DCGM profiling counters catch a T4 reporting ~85% "utilization" while its tensor cores sit at ~13% (memory-bound, not compute-bound). Standalone device-plugin + dcgm-exporter on the accelerated AMI, with a blameless <a href="https://github.com/bibigon14/gpu-observability-eks/blob/main/docs/postmortem.md">postmortem</a> of the driver/AMI matrix</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/bibigon14/terraform-aks-platform">terraform-aks-platform</a></td>
+  <td>Azure, AKS, Terraform, Workload Identity</td>
+  <td>AKS with federated Managed Identity and Azure RBAC; five distinct gotchas caught by CI (OIDC subject drift, k8s version deprecation, VM allowlist, kubelogin, RBAC bootstrap)</td>
+</tr>
+<tr>
   <td><a href="https://github.com/bibigon14/ebpf-tcp-observer">ebpf-tcp-observer</a></td>
   <td>Go, cilium/ebpf, WireGuard, Prometheus</td>
   <td>Kernel-level TCP retransmit observer via a kprobe on <code>tcp_retransmit_skb</code>, scraped from homelab Prometheus over a reverse-initiated WireGuard tunnel from an Oracle Cloud Ampere A1 edge VM</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/bibigon14/cilium-l7-observability">cilium-l7-observability</a></td>
-  <td>OCI Ampere A1, k3s, Cilium 1.17, Hubble</td>
-  <td>Identity-based (not IP-based) L4 <code>CiliumNetworkPolicy</code> with per-flow verdicts in Hubble UI; three Oracle Cloud deployment gotchas documented end-to-end (INPUT reject on pod CIDR, missing SNAT masquerade, Alpine musl DNS flakes against CoreDNS)</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/bibigon14/chaos-scheduler-operator">chaos-scheduler-operator</a></td>
-  <td>Go, kubebuilder, controller-runtime, Prometheus</td>
-  <td>K8s operator running scheduled chaos with a Prometheus SLO guardrail that aborts when the error budget is already burning</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/bibigon14/terraform-eks-platform">terraform-eks-platform</a></td>
-  <td>AWS, EKS, Terraform, OIDC</td>
-  <td>EKS bootstrap with GitHub OIDC and a hand-rolled IRSA module</td>
+  <td><a href="https://github.com/bibigon14/k8s-blue-green-deploy">k8s-blue-green-deploy</a></td>
+  <td>k3s, Argo Rollouts, Go</td>
+  <td>Blue-green with prePromotionAnalysis smoke tests on a Raspberry Pi cluster</td>
 </tr>
 <tr>
   <td><a href="https://github.com/bibigon14/terraform-gke-platform">terraform-gke-platform</a></td>
@@ -77,19 +82,14 @@ Each demo is designed for same-day apply/demo/destroy, with full walkthroughs, M
   <td>GKE with Workload Identity Federation; real race-condition bug caught by CI</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/bibigon14/terraform-aks-platform">terraform-aks-platform</a></td>
-  <td>Azure, AKS, Terraform, Workload Identity</td>
-  <td>AKS with federated Managed Identity and Azure RBAC; five distinct gotchas caught by CI (OIDC subject drift, k8s version deprecation, VM allowlist, kubelogin, RBAC bootstrap)</td>
+  <td><a href="https://github.com/bibigon14/terraform-eks-platform">terraform-eks-platform</a></td>
+  <td>AWS, EKS, Terraform, OIDC</td>
+  <td>EKS bootstrap with GitHub OIDC and a hand-rolled IRSA module</td>
 </tr>
 <tr>
   <td><a href="https://github.com/bibigon14/terraform-vault-platform">terraform-vault-platform</a></td>
   <td>AWS, Vault, Raft, KMS</td>
   <td>HA Vault cluster on EC2 with KMS auto-unseal and Raft integrated storage</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/bibigon14/k8s-blue-green-deploy">k8s-blue-green-deploy</a></td>
-  <td>k3s, Argo Rollouts, Go</td>
-  <td>Blue-green with prePromotionAnalysis smoke tests on a Raspberry Pi cluster</td>
 </tr>
 <tr>
   <td><a href="https://github.com/bibigon14/homelab-k3s">homelab-k3s</a></td>
